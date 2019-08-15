@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Basic LWL</title>
+  <script src="jspsych-6.1.0/jspsych.js"> </script>
+  <script src="jspsych-6.1.0/plugins/jspsych-html-keyboard-response.js"></script>
+  <script src="jspsych-6.1.0/plugins/jspsych-image-keyboard-response.js"></script>
+  <!-- <script src="jspsych-6.1.0/papaparse.min.js"></script>  -->
+  <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.0.2/papaparse.min.js"></script> -->
+  <script src="jspsych-6.1.0/plugins/jspsych-audio-button-response-flexiblelocations.js"></script>
+  <!--<script src="jspsych-6.1.0/google-spreadsheet.js"></script> -->
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.5.1/tabletop.min.js'></script>
+  <link rel="stylesheet" href="jspsych-6.1.0/css/jspsych.css",type="text/css"> </link>
+  <link href="css/jspsych.css" rel="stylesheet" type="text/css"></link>
+  <style>
+  div.absolute {
+    position: absolute;
+    left: 10px;
+    right:0px;
+    top:10px;
+    border: 3px solid #73AD21;
+  }
+  </style>
+</head>
+<body>
+  <div id="jspsych-lwl"></div>
+</body>
+
+<script>
+
+// $('body,html').addClass('stop-scrolling');
+//$('body').bind('touchmove', function(e){e.preventDefault()})
+
+
+//Enter subject id
+// var subject_id = prompt("Enter subject id", "test");
+// var trial_order = prompt("Order (1-8)","1");
+// var input = prompt("Enter input type (touch or click)","touch");
+
+// jsPsych.data.addProperties({
+// 	subject: subject_id,
+// 	order: trial_order
+// });
+
+var publicSpreadsheetUrl = 'https://docs.google.com/spreadsheets/d/1CbJfFGvxbQbdGwK85xz8LEIpOO0umJKJcSZ5L7aKB1E/pubhtml';
+
+var tabletop = Tabletop.init( { key: publicSpreadsheetUrl,
+                   callback: startExperiment,
+                   simpleSheet: true } )
+
+
+// function showInfo(data, tabletop) {
+//   alert('Successfully processed!')
+//   console.log(data);
+// }
+
+// window.addEventListener('DOMContentLoaded', init)
+
+document.body.style.backgroundColor = "black";
+
+var timeline = []
+
+function createTrials(data, tabletop) {
+	console.log(data);
+
+//stim = tabletop.sheets("stimulus_sheet").toArray()
+
+var welcome = {
+  type: "html-keyboard-response",
+  stimulus: "Welcome to the experiment. Press any key to begin."
+};
+
+timeline.push(welcome);
+
+// instructions
+
+var instructions = {
+  type: "html-keyboard-response",
+  stimulus: "<p>In this experiment, two images will appear on the screen.</p>" +
+            "<p>You will then hear a sentence naming one of the images. </p>" +
+            "<p>If the named object is on the <strong>left</strong>, press the letter F on the keyboard as fast as you can. </p>" +
+            "<p>If the named object is <strong>right</strong>, press the letter J as fast as you can.</p>" +
+            "<p>Press any key to begin.</p>",
+          post_trial_gap: 1000
+};
+timeline.push(instructions);
+
+
+// var data = [
+//   {
+//     stimulus:"start",
+//     leftImage:"fireworks_left",
+//     rightImage:"fireworks_right"
+//   },
+//   {
+//     stimulus:"tever_teaching",
+//     leftImage:"Novel1",
+//     rightImage:"black"
+//   }
+// ];
+
+
+
+
+// console.log(data[0])
+
+var expLength = data.length;
+var audioExt="stimuli/sounds/"
+var imageStart='<img src= "stimuli/images/'
+var imageStop= '.jpg"  title = "" width="300" height="250">'
+
+
+lwl_stimuli = []
+
+for (var i = 0; i < expLength; i++) {
+  lwl_stimuli.push(
+  {stimulus: audioExt+data[i]['stimulus']+".wav",
+  choices:[imageStart+data[i]['leftImage']+imageStop, imageStart+data[i]['rightImage']+imageStop]
+  })
+  console.log(lwl_stimuli);
+  console.log(lwl_stimuli[i]['stimulus'])
+  console.log(lwl_stimuli[i]['choices'])
+}
+
+
+var lwl_trials = {
+  type: 'audio-button-response-flexiblelocations',
+  margin_top: ['250px','250px'],
+  margin_bottom: ['0px','0px'],
+  margin_left: ['0px','89px'],
+  margin_right: ['89px','0px'],
+  timeline: lwl_stimuli
+}
+
+timeline.push(lwl_trials)
+};
+
+// Papa.parse('http://sapir.psych.wisc.edu/~zettersten/experiments/demos/lwl_demo/trial_order/YumME_Beta.csv', {
+//   // delimiter: ",",
+//   header: true,
+//   download: true,
+//   dynamicTyping: true,
+//   complete: function(results) {
+//     console.log(results);
+//     var data = results.data;
+//     // data.push(results);
+//     console.log(data);
+// 	createTrials(data);
+// 	startExperiment();
+//   }
+// });
+
+function startExperiment(data, tabletop) {
+	createTrials(data,tabletop);
+jsPsych.init({
+  timeline: timeline,
+  on_finish: function() {
+    jsPsych.data.displayData();
+  }
+});
+};
+
+
+</script>
+
+</html>
