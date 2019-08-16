@@ -6,6 +6,7 @@
   <script src="jspsych-6.1.0/jspsych.js"> </script>
   <script src="jspsych-6.1.0/plugins/jspsych-html-keyboard-response.js"></script>
   <script src="jspsych-6.1.0/plugins/jspsych-image-keyboard-response.js"></script>
+  <script src="jspsych-6.1.0/plugins/jspsych-fullscreen.js"></script>
   <!-- <script src="jspsych-6.1.0/papaparse.min.js"></script>  -->
   <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.0.2/papaparse.min.js"></script> -->
   <script src="jspsych-6.1.0/plugins/jspsych-audio-button-response-flexiblelocations.js"></script>
@@ -66,26 +67,33 @@ function createTrials(data, tabletop) {
 
 //stim = tabletop.sheets("stimulus_sheet").toArray()
 
+// var welcome = {
+//   type: "html-keyboard-response",
+//   stimulus: "Welcome to the experiment. Press any key to begin."
+// };
+
 var welcome = {
-  type: "html-keyboard-response",
-  stimulus: "Welcome to the experiment. Press any key to begin."
-};
+  type: "fullscreen",
+  message: "",
+  button_label: "Start",
+  delay_after: 250
+}
 
 timeline.push(welcome);
 
 // instructions
 
-var instructions = {
-  type: "html-keyboard-response",
-  stimulus: "<p>In this experiment, two images will appear on the screen.</p>" +
-            "<p>You will then hear a sentence naming one of the images. </p>" +
-            "<p>If the named object is on the <strong>left</strong>, press the letter F on the keyboard as fast as you can. </p>" +
-            "<p>If the named object is <strong>right</strong>, press the letter J as fast as you can.</p>" +
-            "<p>Press any key to begin.</p>",
-          post_trial_gap: 1000
-};
-timeline.push(instructions);
-
+// var instructions = {
+//   type: "html-keyboard-response",
+//   stimulus: "<p>In this experiment, two images will appear on the screen.</p>" +
+//             "<p>You will then hear a sentence naming one of the images. </p>" +
+//             "<p>If the named object is on the <strong>left</strong>, press the letter F on the keyboard as fast as you can. </p>" +
+//             "<p>If the named object is <strong>right</strong>, press the letter J as fast as you can.</p>" +
+//             "<p>Press any key to begin.</p>",
+//           post_trial_gap: 1000
+// };
+// timeline.push(instructions);
+//
 
 // var data = [
 //   {
