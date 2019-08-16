@@ -141,8 +141,16 @@ var lwl_trials = {
   timeline: lwl_stimuli
 }
 
-timeline.push(lwl_trials)
+timeline.push(lwl_trials);
+
+var fullscreen_exit = {
+  type: 'fullscreen',
+  fullscreen_mode: false
+}
+timeline.push(fullscreen_exit)
 };
+
+
 
 // Papa.parse('http://sapir.psych.wisc.edu/~zettersten/experiments/demos/lwl_demo/trial_order/YumME_Beta.csv', {
 //   // delimiter: ",",

@@ -59,9 +59,9 @@
 /* borrowing Bootstrap style for btn elements, but combining styles a bit */
 .jspsych-btn {
   display: inline-block;
-  padding: 6px 6px;
-  margin: 1px;
-  font-size: 14px;
+  padding: 20px;
+  margin: 10px;
+  font-size: 30px;
   font-weight: 400;
   font-family: 'Open Sans', 'Arial', sans-serif;
   cursor: pointer;
@@ -70,15 +70,17 @@
   white-space: nowrap;
   vertical-align: middle;
   background-image: none;
-  border: 0px solid transparent;
+  /* border: 0 px none transparent; */
+  border: 5 px white;
   border-radius: 4px;
-  color: #FFF;
-  background-color: #000;
-  border-color: #ccc;
+  color: white;
+  background-color: none;
+  border-color: white;
 }
 
 .jspsych-btn:hover {
-  background-color: #607D8B;
+  /* background-color: #607D8B; */
+  background-color: transparent;
   border-color: #aaa;
 }
 
