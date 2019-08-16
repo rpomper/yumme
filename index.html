@@ -81,19 +81,6 @@ var welcome = {
 
 timeline.push(welcome);
 
-// instructions
-
-// var instructions = {
-//   type: "html-keyboard-response",
-//   stimulus: "<p>In this experiment, two images will appear on the screen.</p>" +
-//             "<p>You will then hear a sentence naming one of the images. </p>" +
-//             "<p>If the named object is on the <strong>left</strong>, press the letter F on the keyboard as fast as you can. </p>" +
-//             "<p>If the named object is <strong>right</strong>, press the letter J as fast as you can.</p>" +
-//             "<p>Press any key to begin.</p>",
-//           post_trial_gap: 1000
-// };
-// timeline.push(instructions);
-//
 
 // var data = [
 //   {
@@ -108,11 +95,6 @@ timeline.push(welcome);
 //   }
 // ];
 
-
-
-
-// console.log(data[0])
-
 var expLength = data.length;
 var audioExt="stimuli/sounds/"
 var imageStart='<img src= "stimuli/images/'
@@ -124,11 +106,12 @@ lwl_stimuli = []
 for (var i = 0; i < expLength; i++) {
   lwl_stimuli.push(
   {stimulus: audioExt+data[i]['stimulus']+".wav",
-  choices:[imageStart+data[i]['leftImage']+imageStop, imageStart+data[i]['rightImage']+imageStop]
+  choices:[imageStart+data[i]['left_image']+imageStop, imageStart+data[i]['right_image']+imageStop],
+  data:{condition:data[i]['condition'],target_side:data[i]['target_side'],correct_response:data[i]['correct_response']}
   })
-  console.log(lwl_stimuli);
-  console.log(lwl_stimuli[i]['stimulus'])
-  console.log(lwl_stimuli[i]['choices'])
+  // console.log(lwl_stimuli);
+  // console.log(lwl_stimuli[i]['stimulus'])
+  // console.log(lwl_stimuli[i]['choices'])
 }
 
 
@@ -138,7 +121,11 @@ var lwl_trials = {
   margin_bottom: ['0px','0px'],
   margin_left: ['0px','89px'],
   margin_right: ['89px','0px'],
-  timeline: lwl_stimuli
+  timeline: lwl_stimuli,
+  data: jsPsych.timelineVariable('data'),
+  on_finish: function(data) {
+    data.correct = data.button_pressed == data.correct_response;
+  }
 }
 
 timeline.push(lwl_trials);
