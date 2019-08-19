@@ -73,13 +73,6 @@ jsPsych.plugins["audio-button-response-flexiblelocations"] = (function() {
         default: '8px',
         description: 'Left margin of button.'
       },
-      // ron
-      set_background: {
-        type: jsPsych.plugins.parameterType.STRING,
-        pretty_name: 'Assign background image',
-        default: '/stimuli/images/face-closed.jpg',
-        description: 'The path and file name for images to be displayed as background'
-      },
       response_ends_trial: {
         type: jsPsych.plugins.parameterType.BOOL,
         pretty_name: 'Response ends trial',
@@ -107,10 +100,6 @@ jsPsych.plugins["audio-button-response-flexiblelocations"] = (function() {
       var audio = jsPsych.pluginAPI.getAudioBuffer(trial.stimulus);
       audio.currentTime = 0;
     }
-
-    // set background image
-    // ${'html'}.css("background-image",trial.set_background) // ron
-    document.body.style.backgroundImage = "url('stimuli/images/"+trial.set_background+".jpg')"
 
     // set up end event if trial needs it
     if(trial.trial_ends_after_audio){

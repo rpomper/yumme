@@ -22,6 +22,7 @@
     right:0px;
     top:10px;
     border: 3px solid #73AD21;
+    background-image: url("stimuli/images/face-closed.jpg");
   }
   </style>
 </head>
@@ -61,6 +62,11 @@ var tabletop = Tabletop.init( { key: publicSpreadsheetUrl,
 // window.addEventListener('DOMContentLoaded', init)
 
 document.body.style.backgroundColor = "black";
+// document.body.style.backgroundImage = "url('stimuli/images/black-background.jpg')";
+document.body.style.backgroundSize = "50%";
+document.body.style.backgroundPosition = "top";
+document.body.style.backgroundRepeat = "no-repeat";
+
 
 var timeline = []
 
@@ -78,6 +84,7 @@ function createTrials(data, tabletop) {
 
   var welcome = {
     type: "fullscreen",
+    // fullscreen_mode: false,
     message: "",
     button_label: "Start",
     delay_after: 250
@@ -111,7 +118,8 @@ function createTrials(data, tabletop) {
     lwl_stimuli.push(
     {stimulus: audioExt+data[i]['stimulus']+".wav",
     choices:[imageStart+data[i]['left_image']+imageStop, imageStart+data[i]['right_image']+imageStop],
-    data:{condition:data[i]['condition'],target_side:data[i]['target_side'],correct_response:data[i]['correct_response']}
+    set_background:data[i]['background'],
+    data:{condition:data[i]['condition'],target_side:data[i]['target_side'],correct_response:data[i]['correct_response'],background:data[i]['background']}
     })
     // {stimulus: audioExt+data['elements'][i]['stimulus']+".wav",
     // choices:[imageStart+data['elements'][i]['left_image']+imageStop, imageStart+data['elements'][i]['right_image']+imageStop],
@@ -130,6 +138,8 @@ function createTrials(data, tabletop) {
     margin_bottom: ['0px','0px'],
     margin_left: ['0px','89px'],
     margin_right: ['89px','0px'],
+    // set_background: 'face-closed',
+    // set_background:data.background,
     timeline: lwl_stimuli,
     data: jsPsych.timelineVariable('data'),
     on_finish: function(data) {
