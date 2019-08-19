@@ -3,6 +3,7 @@
 
 <head>
   <title>Basic LWL</title>
+  <meta charset="utf-8"/>
   <script src="jspsych-6.1.0/jspsych.js"> </script>
   <script src="jspsych-6.1.0/plugins/jspsych-html-keyboard-response.js"></script>
   <script src="jspsych-6.1.0/plugins/jspsych-image-keyboard-response.js"></script>
@@ -35,8 +36,8 @@
 
 
 //Enter subject id
-// var subject_id = prompt("Enter subject id", "test");
-// var trial_order = prompt("Order (1-8)","1");
+var subject_id = prompt("Enter subject id", "test");
+var trial_order = prompt("Order (1-8)","1");
 // var input = prompt("Enter input type (touch or click)","touch");
 
 // jsPsych.data.addProperties({
@@ -48,7 +49,8 @@ var publicSpreadsheetUrl = 'https://docs.google.com/spreadsheets/d/1CbJfFGvxbQbd
 
 var tabletop = Tabletop.init( { key: publicSpreadsheetUrl,
                    callback: startExperiment,
-                   simpleSheet: true } )
+                   // wanted:["Order_1"],
+                   simpleSheet: false } )
 
 
 // function showInfo(data, tabletop) {
@@ -63,78 +65,85 @@ document.body.style.backgroundColor = "black";
 var timeline = []
 
 function createTrials(data, tabletop) {
-	console.log(data);
 
-//stim = tabletop.sheets("stimulus_sheet").toArray()
+  data = data['Order_'+trial_order]['elements']
+  console.log(data);
 
-// var welcome = {
-//   type: "html-keyboard-response",
-//   stimulus: "Welcome to the experiment. Press any key to begin."
-// };
+  //stim = tabletop.sheets("stimulus_sheet").toArray()
 
-var welcome = {
-  type: "fullscreen",
-  message: "",
-  button_label: "Start",
-  delay_after: 250
-}
+  // var welcome = {
+  //   type: "html-keyboard-response",
+  //   stimulus: "Welcome to the experiment. Press any key to begin."
+  // };
 
-timeline.push(welcome);
-
-
-// var data = [
-//   {
-//     stimulus:"start",
-//     leftImage:"fireworks_left",
-//     rightImage:"fireworks_right"
-//   },
-//   {
-//     stimulus:"tever_teaching",
-//     leftImage:"Novel1",
-//     rightImage:"black"
-//   }
-// ];
-
-var expLength = data.length;
-var audioExt="stimuli/sounds/"
-var imageStart='<img src= "stimuli/images/'
-var imageStop= '.jpg"  title = "" width="300" height="250">'
-
-
-lwl_stimuli = []
-
-for (var i = 0; i < expLength; i++) {
-  lwl_stimuli.push(
-  {stimulus: audioExt+data[i]['stimulus']+".wav",
-  choices:[imageStart+data[i]['left_image']+imageStop, imageStart+data[i]['right_image']+imageStop],
-  data:{condition:data[i]['condition'],target_side:data[i]['target_side'],correct_response:data[i]['correct_response']}
-  })
-  // console.log(lwl_stimuli);
-  // console.log(lwl_stimuli[i]['stimulus'])
-  // console.log(lwl_stimuli[i]['choices'])
-}
-
-
-var lwl_trials = {
-  type: 'audio-button-response-flexiblelocations',
-  margin_top: ['250px','250px'],
-  margin_bottom: ['0px','0px'],
-  margin_left: ['0px','89px'],
-  margin_right: ['89px','0px'],
-  timeline: lwl_stimuli,
-  data: jsPsych.timelineVariable('data'),
-  on_finish: function(data) {
-    data.correct = data.button_pressed == data.correct_response;
+  var welcome = {
+    type: "fullscreen",
+    message: "",
+    button_label: "Start",
+    delay_after: 250
   }
-}
 
-timeline.push(lwl_trials);
+  timeline.push(welcome);
 
-var fullscreen_exit = {
-  type: 'fullscreen',
-  fullscreen_mode: false
-}
-timeline.push(fullscreen_exit)
+
+  // var data = [
+  //   {
+  //     stimulus:"start",
+  //     leftImage:"fireworks_left",
+  //     rightImage:"fireworks_right"
+  //   },
+  //   {
+  //     stimulus:"tever_teaching",
+  //     leftImage:"Novel1",
+  //     rightImage:"black"
+  //   }
+  // ];
+
+  var expLength = data.length;
+  var audioExt="stimuli/sounds/"
+  var imageStart='<img src= "stimuli/images/'
+  var imageStop= '.jpg"  title = "" width="300" height="250">'
+
+
+  lwl_stimuli = []
+
+  for (var i = 0; i < expLength; i++) {
+    lwl_stimuli.push(
+    {stimulus: audioExt+data[i]['stimulus']+".wav",
+    choices:[imageStart+data[i]['left_image']+imageStop, imageStart+data[i]['right_image']+imageStop],
+    data:{condition:data[i]['condition'],target_side:data[i]['target_side'],correct_response:data[i]['correct_response']}
+    })
+    // {stimulus: audioExt+data['elements'][i]['stimulus']+".wav",
+    // choices:[imageStart+data['elements'][i]['left_image']+imageStop, imageStart+data['elements'][i]['right_image']+imageStop],
+    // data:{condition:data['elements'][i]['condition'],target_side:data['elements'][i]['target_side'],correct_response:data['elements'][i]['correct_response']}
+    // })
+
+    // console.log(lwl_stimuli);
+    // console.log(lwl_stimuli[i]['stimulus'])
+    // console.log(lwl_stimuli[i]['choices'])
+  }
+
+
+  var lwl_trials = {
+    type: 'audio-button-response-flexiblelocations',
+    margin_top: ['250px','250px'],
+    margin_bottom: ['0px','0px'],
+    margin_left: ['0px','89px'],
+    margin_right: ['89px','0px'],
+    timeline: lwl_stimuli,
+    data: jsPsych.timelineVariable('data'),
+    on_finish: function(data) {
+      data.correct = data.button_pressed == data.correct_response;
+    }
+  }
+
+  timeline.push(lwl_trials);
+
+  var fullscreen_exit = {
+    type: 'fullscreen',
+    fullscreen_mode: false
+  }
+  timeline.push(fullscreen_exit)
 };
 
 
