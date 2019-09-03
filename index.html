@@ -93,19 +93,6 @@ function createTrials(data, tabletop) {
   timeline.push(welcome);
 
 
-  // var data = [
-  //   {
-  //     stimulus:"start",
-  //     leftImage:"fireworks_left",
-  //     rightImage:"fireworks_right"
-  //   },
-  //   {
-  //     stimulus:"tever_teaching",
-  //     leftImage:"Novel1",
-  //     rightImage:"black"
-  //   }
-  // ];
-
   var expLength = data.length;
   var audioExt="stimuli/sounds/"
   var imageStart='<img src= "stimuli/images/'
@@ -121,14 +108,6 @@ function createTrials(data, tabletop) {
     set_background:data[i]['background'],
     data:{condition:data[i]['condition'],target_side:data[i]['target_side'],correct_response:data[i]['correct_response'],background:data[i]['background']}
     })
-    // {stimulus: audioExt+data['elements'][i]['stimulus']+".wav",
-    // choices:[imageStart+data['elements'][i]['left_image']+imageStop, imageStart+data['elements'][i]['right_image']+imageStop],
-    // data:{condition:data['elements'][i]['condition'],target_side:data['elements'][i]['target_side'],correct_response:data['elements'][i]['correct_response']}
-    // })
-
-    // console.log(lwl_stimuli);
-    // console.log(lwl_stimuli[i]['stimulus'])
-    // console.log(lwl_stimuli[i]['choices'])
   }
 
 
@@ -157,21 +136,6 @@ function createTrials(data, tabletop) {
 };
 
 
-
-// Papa.parse('http://sapir.psych.wisc.edu/~zettersten/experiments/demos/lwl_demo/trial_order/YumME_Beta.csv', {
-//   // delimiter: ",",
-//   header: true,
-//   download: true,
-//   dynamicTyping: true,
-//   complete: function(results) {
-//     console.log(results);
-//     var data = results.data;
-//     // data.push(results);
-//     console.log(data);
-// 	createTrials(data);
-// 	startExperiment();
-//   }
-// });
 
 function startExperiment(data, tabletop) {
 	createTrials(data,tabletop);
