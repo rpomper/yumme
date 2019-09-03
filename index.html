@@ -92,6 +92,16 @@ function createTrials(data, tabletop) {
 
   timeline.push(welcome);
 
+  var instructions = {
+    type: 'audio-button-response-flexiblelocations',
+    stimulus: 'stimuli/sounds/Intro.wav',
+    margin_top: ['400px'],
+    margin_bottom: ['0px'],
+    set_background: 'face-closed',
+    choices: ['Go']
+  }
+
+  timeline.push(instructions);
 
   var expLength = data.length;
   var audioExt="stimuli/sounds/"
