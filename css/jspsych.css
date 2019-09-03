@@ -59,7 +59,7 @@
 /* borrowing Bootstrap style for btn elements, but combining styles a bit */
 .jspsych-btn {
   display: inline-block;
-  padding: 20px;
+  padding: 10px;
   margin: 10px;
   font-size: 30px;
   font-weight: 400;
@@ -74,8 +74,11 @@
   border: 5 px white;
   border-radius: 4px;
   color: white;
-  background-color: none;
-  border-color: white;
+  /* background-color: none;
+  border-color: white; */
+  background-color: transparent;
+  border-color: transparent;
+
 }
 
 .jspsych-btn:hover {
