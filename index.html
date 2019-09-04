@@ -197,8 +197,8 @@ jsPsych.init({
   // preload_audio:audio,
   preload_images:images,
   on_finish: function() {
-    // jsPsych.data.displayData();
-    save_data('yumME','V1',subject_id, jsPsych.data.dataAsCSV());
+    jsPsych.data.displayData();
+    // save_data('yumME','V1',subject_id, jsPsych.data.dataAsCSV());
   }
 });
 };
