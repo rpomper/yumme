@@ -197,9 +197,24 @@ jsPsych.init({
   // preload_audio:audio,
   preload_images:images,
   on_finish: function() {
-    jsPsych.data.displayData();
+    // jsPsych.data.displayData();
+    save_data('yumME','V1',subject_id, jsPsych.data.dataAsCSV());
   }
 });
+};
+
+function save_data(experiment, version,identifier, data){
+	$.ajax({
+		type: 'post',
+		cache: false,
+		url: 'https://data.infantlearning.waisman.wisc.edu/infantdb/datastore/save/',
+		data: {
+			experiment: experiment,
+	version: version,
+			identifier: identifier,
+			data: data
+		}
+	})
 };
 
 
